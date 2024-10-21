@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TaskManagementApi.Models;
 
 namespace TaskManagementApi.Controllers
@@ -9,37 +11,42 @@ namespace TaskManagementApi.Controllers
     [Route("api/[controller]")]
     public class TasksController : ControllerBase
     {
-        private static List<TaskItem> tasks = new List<TaskItem>();
+        private readonly TaskContext _context;
+
+        public TasksController(TaskContext context)
+        {
+            _context = context;
+        }
 
         [HttpGet]
-        public ActionResult<IEnumerable<TaskItem>> GetTasks()
+        public async Task<ActionResult<IEnumerable<TaskItem>>> GetTasks()
         {
-            return Ok(tasks);
+            return await _context.Tasks.ToListAsync();
         }
 
         [HttpGet("{id}")]
-        public ActionResult<TaskItem> GetTask(int id)
+        public async Task<ActionResult<TaskItem>> GetTask(int id)
         {
-            var task = tasks.FirstOrDefault(t => t.Id == id);
+            var task = await _context.Tasks.FindAsync(id);
             if (task == null)
             {
                 return NotFound();
             }
-            return Ok(task);
+            return task;
         }
 
         [HttpPost]
-        public ActionResult<TaskItem> CreateTask(TaskItem task)
+        public async Task<ActionResult<TaskItem>> CreateTask(TaskItem task)
         {
-            task.Id = tasks.Count + 1;
-            tasks.Add(task);
+            _context.Tasks.Add(task);
+            await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetTask), new { id = task.Id }, task);
         }
 
         [HttpPut("{id}")]
-        public ActionResult UpdateTask(int id, TaskItem updatedTask)
+        public async Task<IActionResult> UpdateTask(int id, TaskItem updatedTask)
         {
-            var task = tasks.FirstOrDefault(t => t.Id == id);
+            var task = await _context.Tasks.FindAsync(id);
             if (task == null)
             {
                 return NotFound();
@@ -47,18 +54,21 @@ namespace TaskManagementApi.Controllers
             task.Title = updatedTask.Title;
             task.Description = updatedTask.Description;
             task.IsComplete = updatedTask.IsComplete;
+
+            await _context.SaveChangesAsync();
             return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public ActionResult DeleteTask(int id)
+        public async Task<IActionResult> DeleteTask(int id)
         {
-            var task = tasks.FirstOrDefault(t => t.Id == id);
+            var task = await _context.Tasks.FindAsync(id);
             if (task == null)
             {
                 return NotFound();
             }
-            tasks.Remove(task);
+            _context.Tasks.Remove(task);
+            await _context.SaveChangesAsync();
             return NoContent();
         }
     }
