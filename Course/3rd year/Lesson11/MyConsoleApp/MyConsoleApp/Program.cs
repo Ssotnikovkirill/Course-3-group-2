@@ -4,7 +4,7 @@
 
    namespace MyConsoleApp
    {
-       class Program
+       class Program 
        {
            static async Task Main(string[] args)
            {
