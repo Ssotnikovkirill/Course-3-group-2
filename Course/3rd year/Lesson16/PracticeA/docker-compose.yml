@@ -1,0 +1,23 @@
+
+
+services:
+  addition:
+    build:
+      context: . 
+      dockerfile: Mathematics.Addition/Dockerfile
+    ports:
+      - "5001:80"  
+      
+  division:
+    build:
+      context: .
+      dockerfile: Mathematics.Division/Dockerfile
+    ports:
+      - "5002:80"  
+      
+  multiplication:
+    build:
+      context: .
+      dockerfile: Mathematics.Multiplication/Dockerfile
+    ports:
+      - "5003:80"  
