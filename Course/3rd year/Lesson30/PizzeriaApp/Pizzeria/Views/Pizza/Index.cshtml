@@ -1,0 +1,33 @@
+@model List<Pizza>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Список пицц</title>
+</head>
+<body>
+    <h1>Список пицц</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Название</th>
+                <th>Ингредиенты</th>
+                <th>Цена</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var pizza in Model)
+            {
+                <tr>
+                    <td>@pizza.Id</td>
+                    <td>@pizza.Name</td>
+                    <td>@pizza.Ingredients</td>
+                    <td>@pizza.Price</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>
