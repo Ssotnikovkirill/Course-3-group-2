@@ -1,0 +1,16 @@
+@model PizzeriaApp.Models.Pizza
+
+<h2>Добавить пиццу</h2>
+
+<form method="post">
+    <label>Название:</label>
+    <input type="text" name="Name" class="form-control" required />
+    
+    <label>Ингредиенты:</label>
+    <input type="text" name="Ingredients" class="form-control" required />
+    
+    <label>Цена:</label>
+    <input type="number" name="Price" class="form-control" required />
+
+    <button type="submit" class="btn btn-success">Добавить</button>
+</form>

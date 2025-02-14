@@ -1,0 +1,20 @@
+@model List<PizzeriaApp.Models.Pizza>
+
+<h2>Меню пиццы</h2>
+<a href="/Pizza/Create" class="btn btn-primary">Добавить пиццу</a>
+
+<table class="table">
+    <tr>
+        <th>Название</th>
+        <th>Ингредиенты</th>
+        <th>Цена</th>
+    </tr>
+    @foreach (var pizza in Model)
+    {
+        <tr>
+            <td>@pizza.Name</td>
+            <td>@pizza.Ingredients</td>
+            <td>@pizza.Price</td>
+        </tr>
+    }
+</table>
