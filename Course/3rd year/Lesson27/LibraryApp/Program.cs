@@ -18,6 +18,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
+    
+builder.Services.AddScoped<IBookManager, BookManager>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
