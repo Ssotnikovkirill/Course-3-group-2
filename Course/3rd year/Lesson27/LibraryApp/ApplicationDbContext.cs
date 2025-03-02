@@ -6,6 +6,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
     }
-}
 
-public DbSet<Book> Books { get; set; }
+    // Добавляем таблицу для хранения книг
+    public DbSet<Book> Books { get; set; }
+}

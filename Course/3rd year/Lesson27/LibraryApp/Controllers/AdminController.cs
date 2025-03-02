@@ -56,6 +56,32 @@ public class AdminController : ControllerBase
         return Ok($"User {email} deleted");
     }
 
+    [HttpPost("create-librarian")]
+    public async Task<IActionResult> CreateLibrarian(string email, string password)
+    {
+        var librarian = new ApplicationUser { UserName = email, Email = email };
+        var result = await _userManager.CreateAsync(librarian, password);
+
+        if (result.Succeeded)
+        {
+            await _userManager.AddToRoleAsync(librarian, "Librarian");
+            return Ok("Librarian created successfully");
+        }
+
+        return BadRequest(result.Errors);
+    }
+
+    [HttpPost("assign-librarian")]
+    public async Task<IActionResult> AssignLibrarian(string email)
+    {
+        var user = await _userManager.FindByEmailAsync(email);
+        if (user == null)
+            return NotFound("User not found");
+
+        await _userManager.AddToRoleAsync(user, "Librarian");
+        return Ok($"{email} assigned as Librarian");
+    }
+
     // Изменение роли пользователя
     [HttpPost("change-role")]
     public async Task<IActionResult> ChangeUserRole(string email, string oldRole, string newRole)

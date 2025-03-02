@@ -2,9 +2,11 @@ using Microsoft.AspNetCore.Identity;
 
 public class DbInitializer
 {
+
+
     public static async Task InitializeAsync(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
     {
-        string[] roleNames = { "Admin", "User" };
+        string[] roleNames = { "Admin", "User", "Librarian" };
 
         foreach (var role in roleNames)
         {
@@ -24,4 +26,6 @@ public class DbInitializer
             await userManager.AddToRoleAsync(adminUser, "Admin");
         }
     }
+
+    
 }
