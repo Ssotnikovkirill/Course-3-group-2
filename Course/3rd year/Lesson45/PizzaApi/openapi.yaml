@@ -1,0 +1,21 @@
+openapi: 3.0.0
+info:
+  title: Pizza API
+  description: Простое API для управления пиццами
+  version: "1.0.0"
+
+paths:
+  /api/pizza:
+    get:
+      summary: Получить список пицц
+      description: Возвращает список доступных пицц
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                  example: "Маргарита"
