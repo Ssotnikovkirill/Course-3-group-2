@@ -4,7 +4,22 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(); // Подключаем Swagger
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Pizza API",
+        Version = "v1",
+        Description = "Простое API для управления заказами пиццы",
+        Contact = new OpenApiContact
+        {
+            Name = "Разработчик",
+            Email = "dev@example.com",
+            Url = new Uri("https://example.com")
+        }
+    });
+});
+
 
 var app = builder.Build();
 
